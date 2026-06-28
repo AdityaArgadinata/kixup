@@ -8,7 +8,7 @@ import { SITE, categories, formatDate, getArticleUrl, getReadingTime, sortArticl
 const articles = sortArticles(await getCollection('articles', ({ data }) => !data.draft));
 const [featured, ...latest] = articles;
 const topStories = latest.slice(0, 3);
-const latestFeed = latest.slice(3, 10);
+const latestFeed = latest.slice(3);
 const popular = latest.slice(0, 8);
 ---
 

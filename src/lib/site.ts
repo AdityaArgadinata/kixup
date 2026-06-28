@@ -15,13 +15,14 @@ export const SITE = {
 };
 
 export const categories = [
-  { name: 'Soccer Explainers', slug: 'soccer-explainers', description: 'Clear guides to rules, formats, competitions, and soccer terms for US readers.' },
+  { name: 'World Cup', slug: 'world-cup', description: 'World Cup news, match context, tournament explainers, and team storylines.' },
   { name: 'MLS', slug: 'mls', description: 'Major League Soccer explainers, rules, roster context, and league business.' },
   { name: 'USMNT', slug: 'usmnt', description: 'Context and explainers around the United States men’s national team.' },
   { name: 'Premier League', slug: 'premier-league', description: 'Premier League guides, club business, popularity, and US viewing context.' },
   { name: 'Champions League', slug: 'champions-league', description: 'UEFA Champions League format, history, and match context for American fans.' },
   { name: 'Transfers', slug: 'transfers', description: 'How soccer transfers, fees, loans, release clauses, and windows work.' },
   { name: 'Soccer Business', slug: 'soccer-business', description: 'Money, media rights, club revenue, salary rules, and financial regulation in soccer.' },
+  { name: 'Analysis', slug: 'analysis', description: 'Tactical analysis, rules context, features, and deeper soccer explainers.' },
 ] as const;
 
 export const primaryNav = [
@@ -66,9 +67,15 @@ export function getReadingTime(body = '') {
 }
 
 export function sortArticles(articles: Article[]) {
-  return [...articles].sort(
-    (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
-  );
+  return [...articles].sort((a, b) => {
+    const publishedDiff = b.data.publishedAt.getTime() - a.data.publishedAt.getTime();
+    if (publishedDiff !== 0) return publishedDiff;
+
+    const updatedDiff = b.data.updatedAt.getTime() - a.data.updatedAt.getTime();
+    if (updatedDiff !== 0) return updatedDiff;
+
+    return a.data.title.localeCompare(b.data.title);
+  });
 }
 
 export function getRelatedArticles(current: Article, articles: Article[], limit = 3) {

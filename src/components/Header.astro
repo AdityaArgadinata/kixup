@@ -4,8 +4,18 @@ import { primaryNav, SITE } from '../lib/site';
 
 <header class="border-b border-slate-200 bg-white">
   <div class="border-b border-slate-100 bg-slate-50">
-    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8">
-      <p class="text-xs font-bold uppercase tracking-wide text-slate-500">Soccer explained for American fans</p>
+    <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-2 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+      <div class="grid gap-2 sm:grid-cols-3 lg:flex-1" data-header-schedule>
+        <a class="grid min-h-14 place-items-center border border-slate-200 bg-white px-3 py-2 text-center text-xs font-bold text-slate-500" href="/schedule/">
+          <span>Schedule loading</span>
+        </a>
+        <a class="hidden min-h-14 place-items-center border border-slate-200 bg-white px-3 py-2 text-center text-xs font-bold text-slate-500 sm:grid" href="/schedule/">
+          <span>Schedule loading</span>
+        </a>
+        <a class="hidden min-h-14 place-items-center border border-slate-200 bg-white px-3 py-2 text-center text-xs font-bold text-slate-500 sm:grid" href="/schedule/">
+          <span>Schedule loading</span>
+        </a>
+      </div>
       <nav class="flex gap-4 text-xs font-bold uppercase tracking-wide text-slate-500" aria-label="Utility">
         <a class="hover:text-emerald-700" href="/scores/">Scores</a>
         <a class="hover:text-emerald-700" href="/rss.xml">RSS</a>
@@ -37,3 +47,96 @@ import { primaryNav, SITE } from '../lib/site';
     </div>
   </nav>
 </header>
+
+<script>
+  document.querySelectorAll('[data-header-schedule]').forEach((root) => {
+    async function loadHeaderSchedule() {
+      try {
+        const response = await fetch('/api/schedule.json', {
+          headers: { Accept: 'application/json' },
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Unable to load schedule.');
+        }
+
+        const matches = Array.isArray(data.matches) ? data.matches : [];
+        const upcoming = matches
+          .filter((match) => ['NS', 'LIVE', 'HT'].includes(match.statusShort))
+          .sort((a, b) => new Date(a.kickoff).getTime() - new Date(b.kickoff).getTime())
+          .slice(0, 3);
+
+        const selectedMatches = upcoming.length > 0
+          ? upcoming
+          : matches
+              .sort((a, b) => new Date(b.kickoff).getTime() - new Date(a.kickoff).getTime())
+              .slice(0, 3);
+
+        if (selectedMatches.length === 0) return;
+
+        root.innerHTML = selectedMatches.map(renderScheduleCard).join('');
+      } catch {
+        root.innerHTML = `
+          <a class="grid min-h-14 place-items-center border border-slate-200 bg-white px-3 py-2 text-center text-xs font-bold text-slate-500" href="/schedule/">
+            <span>Schedule unavailable</span>
+          </a>
+        `;
+      }
+    }
+
+    loadHeaderSchedule();
+  });
+
+  function renderScheduleCard(match) {
+    const home = match.home?.name || 'TBD';
+    const away = match.away?.name || 'TBD';
+    const homeLogo = match.home?.logo || '';
+    const awayLogo = match.away?.logo || '';
+    const kickoff = new Date(match.kickoff);
+    const time = kickoff.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZone: 'Asia/Jakarta',
+    });
+    const date = kickoff.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      timeZone: 'Asia/Jakarta',
+    });
+
+    return `
+      <a class="grid min-h-14 min-w-0 grid-rows-[1fr_auto] border border-slate-200 bg-white px-3 py-2 text-xs hover:border-emerald-500" href="/schedule/">
+        <span class="grid min-w-0 grid-cols-[1fr_24px_1fr] items-center gap-2">
+          ${renderHeaderTeam(home, homeLogo, 'justify-end text-right')}
+          <span class="text-center font-black text-slate-400">vs</span>
+          ${renderHeaderTeam(away, awayLogo, 'justify-start text-left')}
+        </span>
+        <span class="mt-1 block text-center font-bold text-emerald-700">${escapeHtml(date)} · ${escapeHtml(time)}</span>
+      </a>
+    `;
+  }
+
+  function renderHeaderTeam(name, logo, alignClass) {
+    const reverse = alignClass.includes('justify-end');
+    const logoHtml = logo
+      ? `<img src="${escapeHtml(logo)}" alt="" loading="lazy" decoding="async" class="h-4 w-4 shrink-0 object-contain" />`
+      : '<span class="h-4 w-4 shrink-0 rounded-full bg-slate-200"></span>';
+    const nameHtml = `<span class="truncate font-black text-slate-950">${escapeHtml(name)}</span>`;
+
+    return `
+      <span class="flex min-w-0 items-center gap-1.5 ${alignClass}">
+        ${reverse ? `${nameHtml}${logoHtml}` : `${logoHtml}${nameHtml}`}
+      </span>
+    `;
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+</script>
