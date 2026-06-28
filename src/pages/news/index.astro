@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Layout from '../../layouts/Layout.astro';
+import { formatDate, getArticleUrl, getReadingTime, sortArticles } from '../../lib/site';
+
+const articles = sortArticles(await getCollection('articles', ({ data }) => !data.draft));
+---
+
+<Layout
+  title="Soccer News"
+  description="Latest soccer news context and explainers from Kixup News."
+>
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumbs items={[{ label: 'News' }]} />
+    <header class="mt-8 max-w-3xl">
+      <p class="text-sm font-black uppercase tracking-wide text-emerald-700">News</p>
+      <h1 class="mt-3 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">Soccer News</h1>
+      <p class="mt-4 text-lg leading-8 text-slate-600">
+        Latest soccer explainers, news context, and analysis for American fans.
+      </p>
+    </header>
+
+    <section class="mt-8 border border-slate-200 bg-white">
+      <div class="divide-y divide-slate-200">
+        {articles.map((article) => (
+          <article class="grid gap-4 p-5 sm:grid-cols-[220px_1fr]">
+            <a href={getArticleUrl(article)} class="block bg-slate-100">
+              <img
+                src={article.data.image}
+                alt={article.data.imageAlt}
+                width="440"
+                height="248"
+                loading="lazy"
+                decoding="async"
+                class="aspect-video w-full object-cover"
+              />
+            </a>
+            <div>
+              <p class="text-xs font-black uppercase tracking-wide text-emerald-700">{article.data.category}</p>
+              <h2 class="mt-2 text-2xl font-black leading-tight text-slate-950">
+                <a class="hover:text-emerald-700" href={getArticleUrl(article)}>{article.data.title}</a>
+              </h2>
+              <p class="mt-2 text-sm leading-6 text-slate-600">{article.data.description}</p>
+              <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                {formatDate(article.data.publishedAt)} · {getReadingTime(article.body)}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+</Layout>

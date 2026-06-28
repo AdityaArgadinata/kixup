@@ -24,6 +24,15 @@ export const categories = [
   { name: 'Soccer Business', slug: 'soccer-business', description: 'Money, media rights, club revenue, salary rules, and financial regulation in soccer.' },
 ] as const;
 
+export const primaryNav = [
+  { name: 'Soccer', href: '/' },
+  { name: 'World Cup', href: '/world-cup/' },
+  { name: 'News', href: '/news/' },
+  { name: 'Scores', href: '/scores/' },
+  { name: 'Schedule', href: '/schedule/' },
+  { name: 'Premier League', href: '/premier-league/' },
+] as const;
+
 export type Article = CollectionEntry<'articles'>;
 
 export function slugify(value: string) {

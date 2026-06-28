@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ScoreboardWidget from '../../components/ScoreboardWidget.astro';
+import Layout from '../../layouts/Layout.astro';
+import { formatDate, getArticleUrl, getReadingTime, sortArticles } from '../../lib/site';
+
+const articles = sortArticles(await getCollection('articles', ({ data }) => !data.draft));
+const worldCupArticles = articles.filter((article) =>
+  article.data.tags.some((tag) => ['Club World Cup', 'FIFA', 'USMNT'].includes(tag)),
+);
+---
+
+<Layout
+  title="World Cup Soccer"
+  description="World Cup scores, schedule, and soccer context for American fans."
+>
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumbs items={[{ label: 'World Cup' }]} />
+    <header class="mt-8 max-w-3xl">
+      <p class="text-sm font-black uppercase tracking-wide text-emerald-700">World Cup</p>
+      <h1 class="mt-3 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">World Cup Soccer</h1>
+      <p class="mt-4 text-lg leading-8 text-slate-600">
+        Scores, schedule, and tournament explainers for fans following World Cup soccer from the United States.
+      </p>
+    </header>
+
+    <section class="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <div class="space-y-6">
+        <ScoreboardWidget showViewMore />
+
+        <section class="border border-slate-200 bg-white">
+          <div class="border-b border-slate-200 px-5 py-4">
+            <h2 class="text-xl font-black tracking-tight text-slate-950">World Cup Coverage</h2>
+          </div>
+          <div class="divide-y divide-slate-200">
+            {worldCupArticles.map((article) => (
+              <article class="grid gap-4 p-5 sm:grid-cols-[180px_1fr]">
+                <a href={getArticleUrl(article)} class="block bg-slate-100">
+                  <img
+                    src={article.data.image}
+                    alt={article.data.imageAlt}
+                    width="360"
+                    height="203"
+                    loading="lazy"
+                    decoding="async"
+                    class="aspect-video w-full object-cover"
+                  />
+                </a>
+                <div>
+                  <p class="text-xs font-black uppercase tracking-wide text-emerald-700">{article.data.category}</p>
+                  <h3 class="mt-2 text-2xl font-black leading-tight text-slate-950">
+                    <a class="hover:text-emerald-700" href={getArticleUrl(article)}>{article.data.title}</a>
+                  </h3>
+                  <p class="mt-2 text-sm leading-6 text-slate-600">{article.data.description}</p>
+                  <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    {formatDate(article.data.publishedAt)} · {getReadingTime(article.body)}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <aside class="space-y-6">
+        <ScoreboardWidget
+          compact
+          kicker="Schedule"
+          title="Upcoming matches"
+          description="World Cup fixtures for the next seven days."
+          endpoint="/api/schedule.json"
+          emptyMessage="No World Cup fixtures are available for the next seven days."
+          display="schedule"
+          showViewMore
+          viewMoreHref="/schedule/"
+        />
+      </aside>
+    </section>
+  </main>
+</Layout>

@@ -13,6 +13,7 @@ export type ScoreboardMatch = {
   league: string;
   country: string;
   kickoff: string;
+  venue: string | null;
   home: ScoreboardTeam;
   away: ScoreboardTeam;
 };
@@ -36,13 +37,13 @@ type FootballDataMatch = {
     };
   };
   homeTeam: {
-    name: string;
+    name?: string | null;
     crest?: string | null;
-  };
+  } | null;
   awayTeam: {
-    name: string;
+    name?: string | null;
     crest?: string | null;
-  };
+  } | null;
   score: {
     fullTime?: {
       home: number | null;
@@ -53,6 +54,7 @@ type FootballDataMatch = {
       away: number | null;
     };
   };
+  venue?: string | null;
 };
 
 const statusMap: Record<string, string> = {
@@ -91,17 +93,22 @@ export function normalizeFootballDataMatch(match: FootballDataMatch): Scoreboard
     league: match.competition.name,
     country: match.competition.area?.name ?? '',
     kickoff: match.utcDate,
+    venue: match.venue ?? null,
     home: {
-      name: match.homeTeam.name,
-      logo: match.homeTeam.crest,
+      name: getTeamName(match.homeTeam),
+      logo: match.homeTeam?.crest,
       score: score?.home ?? null,
     },
     away: {
-      name: match.awayTeam.name,
-      logo: match.awayTeam.crest,
+      name: getTeamName(match.awayTeam),
+      logo: match.awayTeam?.crest,
       score: score?.away ?? null,
     },
   };
+}
+
+function getTeamName(team: FootballDataMatch['homeTeam']) {
+  return team?.name || 'TBD';
 }
 
 export function getTodayInNewYork() {
@@ -111,6 +118,12 @@ export function getTodayInNewYork() {
 export function getDateDaysAgoInNewYork(daysAgo: number) {
   const date = new Date();
   date.setDate(date.getDate() - daysAgo);
+  return formatDateInNewYork(date);
+}
+
+export function getDateDaysFromNowInNewYork(daysFromNow: number) {
+  const date = new Date();
+  date.setDate(date.getDate() + daysFromNow);
   return formatDateInNewYork(date);
 }
 

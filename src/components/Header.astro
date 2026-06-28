@@ -1,5 +1,5 @@
 ---
-import { categories, SITE } from '../lib/site';
+import { primaryNav, SITE } from '../lib/site';
 ---
 
 <header class="border-b border-slate-200 bg-white">
@@ -26,9 +26,12 @@ import { categories, SITE } from '../lib/site';
 
   <nav class="border-t border-slate-200 bg-slate-950" aria-label="Sections">
     <div class="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4 py-0 text-sm font-bold text-white sm:px-6 lg:px-8">
-      {categories.map((category) => (
-        <a class="shrink-0 px-3 py-3 hover:bg-emerald-700" href={`/${category.slug}/`}>
-          {category.name}
+      {primaryNav.map((item) => (
+        <a class="flex shrink-0 items-center gap-2 px-4 py-3 hover:bg-emerald-700" href={item.href}>
+          {item.name === 'Soccer' && (
+            <img src="/favicon.svg" alt="" class="h-5 w-5 rounded-full bg-white p-0.5" loading="eager" decoding="async" />
+          )}
+          {item.name}
         </a>
       ))}
     </div>

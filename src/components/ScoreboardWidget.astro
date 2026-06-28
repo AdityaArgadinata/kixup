@@ -1,11 +1,29 @@
 ---
 interface Props {
   compact?: boolean;
+  kicker?: string;
   limit?: number;
+  title?: string;
+  description?: string;
+  endpoint?: string;
+  emptyMessage?: string;
+  display?: 'scores' | 'schedule';
   showViewMore?: boolean;
+  viewMoreHref?: string;
 }
 
-const { compact = false, limit, showViewMore = false } = Astro.props;
+const {
+  compact = false,
+  kicker = 'Latest scores',
+  limit,
+  title = 'World Cup scores',
+  description = 'Latest World Cup results from the last seven days, powered by football-data.org.',
+  endpoint = '/api/scoreboard.json',
+  emptyMessage = 'No World Cup scores are available for the selected window.',
+  display = 'scores',
+  showViewMore = false,
+  viewMoreHref = '/scores/',
+} = Astro.props;
 ---
 
 <section
@@ -14,22 +32,24 @@ const { compact = false, limit, showViewMore = false } = Astro.props;
     compact ? 'p-5' : 'p-6 sm:p-8',
   ]}
   data-scoreboard
-  data-endpoint="/api/scoreboard.json"
+  data-endpoint={endpoint}
   data-limit={limit}
+  data-empty-message={emptyMessage}
+  data-display={display}
 >
   <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
     <div>
-      <p class="text-sm font-black uppercase tracking-wide text-emerald-700">Latest scores</p>
+      <p class="text-sm font-black uppercase tracking-wide text-emerald-700">{kicker}</p>
       <h2 class={compact ? 'mt-2 text-2xl font-black tracking-tight text-slate-950' : 'mt-2 text-3xl font-black tracking-tight text-slate-950'}>
-        World Cup scores
+        {title}
       </h2>
       <p class="mt-2 text-sm leading-6 text-slate-600">
-        Latest World Cup results from the last seven days, powered by football-data.org.
+        {description}
       </p>
     </div>
     {showViewMore && (
       <a
-        href="/scores/"
+        href={viewMoreHref}
         class="w-fit border border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-800 hover:border-emerald-600 hover:text-emerald-700"
       >
         View more
@@ -77,6 +97,8 @@ const { compact = false, limit, showViewMore = false } = Astro.props;
   document.querySelectorAll('[data-scoreboard]').forEach((root) => {
     const endpoint = root.getAttribute('data-endpoint') ?? '/api/scoreboard.json';
     const limit = Number(root.getAttribute('data-limit')) || undefined;
+    const emptyMessage = root.getAttribute('data-empty-message') || 'No matches are available for the selected window.';
+    const display = root.getAttribute('data-display') || 'scores';
     const body = root.querySelector('[data-scoreboard-body]');
     const meta = root.querySelector('[data-scoreboard-meta]');
 
@@ -96,7 +118,7 @@ const { compact = false, limit, showViewMore = false } = Astro.props;
         }
 
         const matches = Array.isArray(data.matches) && limit ? data.matches.slice(0, limit) : data.matches;
-        body.innerHTML = renderMatches(matches, data.message);
+        body.innerHTML = renderMatches(matches, data.message, emptyMessage, display);
         meta.textContent = data.generatedAt
           ? `Updated ${new Date(data.generatedAt).toLocaleTimeString('en-US', {
               hour: 'numeric',
@@ -113,29 +135,56 @@ const { compact = false, limit, showViewMore = false } = Astro.props;
     loadScoreboard();
   });
 
-  function renderMatches(matches, message) {
+  function renderMatches(matches, message, emptyMessage, display) {
     if (!Array.isArray(matches) || matches.length === 0) {
-      return renderEmpty(message || 'No World Cup scores are available for the last seven days.');
+      return renderEmpty(message || emptyMessage);
     }
 
-    return `<div class="grid gap-3 md:grid-cols-2">${matches.map(renderMatch).join('')}</div>`;
+    return `<div class="grid gap-3 md:grid-cols-2">${matches.map((match) => renderMatch(match, display)).join('')}</div>`;
   }
 
-  function renderMatch(match) {
+  function renderMatch(match, display) {
     const status = statusLabels.get(match.statusShort) || match.status || match.statusShort;
-    const time = match.statusShort === 'NS'
-      ? new Date(match.kickoff).toLocaleTimeString('en-US', {
-          hour: 'numeric',
-          minute: '2-digit',
-          timeZoneName: 'short',
-        })
+    const kickoff = new Date(match.kickoff);
+    const dateLabel = kickoff.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      timeZone: 'Asia/Jakarta',
+    });
+    const timeLabel = kickoff.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZone: 'Asia/Jakarta',
+      timeZoneName: 'short',
+    });
+    const matchTime = match.statusShort === 'NS'
+      ? `${dateLabel} · ${timeLabel}`
       : `${status}${match.elapsed ? ` · ${match.elapsed}'` : ''}`;
+
+    if (display === 'schedule') {
+      return `
+        <article class="border border-slate-200 bg-slate-50 p-4">
+          <div class="flex items-center justify-between gap-3 text-xs font-bold uppercase tracking-wide text-slate-500">
+            <span>${escapeHtml(match.league)}</span>
+            <span>${escapeHtml(status)}</span>
+          </div>
+          <p class="mt-3 text-sm font-black text-slate-950">${escapeHtml(dateLabel)}</p>
+          <p class="mt-1 text-sm font-semibold text-slate-600">${escapeHtml(timeLabel)}</p>
+          <div class="mt-4 flex items-center justify-between gap-3">
+            ${renderScheduleTeam(match.home)}
+            <span class="shrink-0 text-xs font-black uppercase text-slate-400">vs</span>
+            ${renderScheduleTeam(match.away)}
+          </div>
+        </article>
+      `;
+    }
 
     return `
       <article class="border border-slate-200 bg-slate-50 p-4">
         <div class="flex items-center justify-between gap-3 text-xs font-bold uppercase tracking-wide text-slate-500">
           <span>${escapeHtml(match.league)}</span>
-          <span>${escapeHtml(time)}</span>
+          <span>${escapeHtml(matchTime)}</span>
         </div>
         <div class="mt-4 space-y-3">
           ${renderTeam(match.home)}
@@ -145,14 +194,26 @@ const { compact = false, limit, showViewMore = false } = Astro.props;
     `;
   }
 
+  function renderScheduleTeam(team) {
+    const teamName = team?.name || 'TBD';
+
+    return `
+      <div class="flex min-w-0 flex-1 items-center gap-2">
+        ${team?.logo ? `<img src="${team.logo}" alt="" loading="lazy" decoding="async" class="h-6 w-6 shrink-0 object-contain" />` : ''}
+        <span class="truncate text-sm font-bold text-slate-950">${escapeHtml(teamName)}</span>
+      </div>
+    `;
+  }
+
   function renderTeam(team) {
+    const teamName = team?.name || 'TBD';
     const score = team.score === null || team.score === undefined ? '-' : team.score;
 
     return `
       <div class="flex items-center justify-between gap-4">
         <div class="flex min-w-0 items-center gap-3">
-          ${team.logo ? `<img src="${team.logo}" alt="" loading="lazy" decoding="async" class="h-6 w-6 shrink-0 object-contain" />` : ''}
-          <span class="truncate text-sm font-bold text-slate-950">${escapeHtml(team.name)}</span>
+          ${team?.logo ? `<img src="${team.logo}" alt="" loading="lazy" decoding="async" class="h-6 w-6 shrink-0 object-contain" />` : ''}
+          <span class="truncate text-sm font-bold text-slate-950">${escapeHtml(teamName)}</span>
         </div>
         <span class="text-lg font-black tabular-nums text-emerald-700">${score}</span>
       </div>

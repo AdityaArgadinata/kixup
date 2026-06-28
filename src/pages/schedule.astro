@@ -1,0 +1,18 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ScheduleTable from '../components/ScheduleTable.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="World Cup Schedule"
+  description="Upcoming World Cup soccer schedule for American fans."
+>
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumbs items={[{ label: 'Schedule' }]} />
+
+    <div class="mt-8">
+      <ScheduleTable />
+    </div>
+  </main>
+</Layout>
