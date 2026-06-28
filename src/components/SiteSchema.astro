@@ -1,0 +1,41 @@
+---
+import { SITE, categories } from '../lib/site';
+
+const organizationId = new URL('/#organization', SITE.url).toString();
+const websiteId = new URL('/#website', SITE.url).toString();
+const homeUrl = new URL('/', SITE.url).toString();
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'NewsMediaOrganization',
+      '@id': organizationId,
+      name: SITE.name,
+      url: homeUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: new URL('/favicon.svg', SITE.url).toString(),
+      },
+      foundingDate: SITE.foundingDate,
+      email: SITE.contactEmail,
+      sameAs: SITE.sameAs,
+      knowsAbout: categories.map((category) => category.name),
+      description: SITE.defaultDescription,
+    },
+    {
+      '@type': 'WebSite',
+      '@id': websiteId,
+      name: SITE.name,
+      url: homeUrl,
+      publisher: {
+        '@id': organizationId,
+      },
+      inLanguage: SITE.language,
+      description: SITE.defaultDescription,
+    },
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

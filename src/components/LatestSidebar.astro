@@ -1,0 +1,33 @@
+---
+import { categories, formatDate, getArticleUrl, type Article } from '../lib/site';
+
+interface Props {
+  articles: Article[];
+}
+
+const { articles } = Astro.props;
+---
+
+<aside class="space-y-8">
+  <section class="border border-slate-200 bg-white p-5">
+    <h2 class="text-sm font-black uppercase tracking-wide text-slate-950">Latest articles</h2>
+    <ul class="mt-4 space-y-4">
+      {articles.slice(0, 5).map((article) => (
+        <li>
+          <a class="text-sm font-bold leading-5 text-slate-900 hover:text-emerald-700" href={getArticleUrl(article)}>
+            {article.data.title}
+          </a>
+          <p class="mt-1 text-xs text-slate-500">{formatDate(article.data.publishedAt)}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+  <section class="border border-slate-200 bg-white p-5">
+    <h2 class="text-sm font-black uppercase tracking-wide text-slate-950">Categories</h2>
+    <ul class="mt-4 space-y-2 text-sm font-semibold">
+      {categories.map((category) => (
+        <li><a class="text-slate-700 hover:text-emerald-700" href={`/${category.slug}/`}>{category.name}</a></li>
+      ))}
+    </ul>
+  </section>
+</aside>

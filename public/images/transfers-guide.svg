@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Soccer transfer paperwork</title>
+  <desc id="desc">A contract, arrows, and soccer ball representing transfer deals.</desc>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <rect x="210" y="105" width="420" height="465" fill="#ffffff" stroke="#cbd5e1" stroke-width="8"/>
+  <path d="M280 205h280M280 270h220M280 335h260M280 455h160" stroke="#64748b" stroke-width="18" stroke-linecap="round"/>
+  <path d="M685 250h265m0 0l-70-70m70 70l-70 70" fill="none" stroke="#047857" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="850" cy="460" r="76" fill="#0f172a"/>
+  <path d="M850 384v152M774 460h152" stroke="#ffffff" stroke-width="10"/>
+  <text x="210" y="80" fill="#0f172a" font-family="Arial, sans-serif" font-size="44" font-weight="900">Transfers Explained</text>
+</svg>

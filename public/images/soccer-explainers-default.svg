@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Soccer field explainer graphic</title>
+  <desc id="desc">A modern soccer field with tactical lines for explainer articles.</desc>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <rect x="70" y="70" width="1060" height="535" fill="#047857"/>
+  <path d="M70 337.5h1060M600 70v535M600 225a112.5 112.5 0 1 0 0 225a112.5 112.5 0 0 0 0-225Z" fill="none" stroke="#ecfdf5" stroke-width="8"/>
+  <rect x="70" y="215" width="150" height="245" fill="none" stroke="#ecfdf5" stroke-width="8"/>
+  <rect x="980" y="215" width="150" height="245" fill="none" stroke="#ecfdf5" stroke-width="8"/>
+  <circle cx="600" cy="337.5" r="8" fill="#ecfdf5"/>
+  <text x="90" y="122" fill="#ffffff" font-family="Arial, sans-serif" font-size="42" font-weight="800">Kixup News</text>
+</svg>

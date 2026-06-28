@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">European night match stadium</title>
+  <desc id="desc">A soccer stadium under bright lights during a European night match.</desc>
+  <rect width="1200" height="675" fill="#0f172a"/>
+  <path d="M0 450c230-90 430-95 600-30c170-65 370-60 600 30v225H0V450Z" fill="#064e3b"/>
+  <path d="M120 445h960l-70 120H190l-70-120Z" fill="#022c22"/>
+  <g fill="#f8fafc">
+    <circle cx="160" cy="90" r="14"/><circle cx="280" cy="70" r="10"/><circle cx="920" cy="80" r="12"/><circle cx="1040" cy="110" r="9"/>
+  </g>
+  <path d="M170 170h860" stroke="#f8fafc" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+  <path d="M235 210h730" stroke="#f8fafc" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+  <circle cx="600" cy="350" r="82" fill="none" stroke="#f8fafc" stroke-width="10"/>
+  <text x="90" y="120" fill="#ffffff" font-family="Arial, sans-serif" font-size="44" font-weight="800">Champions League Guide</text>
+</svg>

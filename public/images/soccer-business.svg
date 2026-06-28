@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Soccer business chart</title>
+  <desc id="desc">A soccer field and revenue chart for business explainers.</desc>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <rect x="80" y="105" width="500" height="420" fill="#047857"/>
+  <path d="M80 315h500M330 105v420" stroke="#ecfdf5" stroke-width="8"/>
+  <rect x="680" y="420" width="75" height="105" fill="#10b981"/>
+  <rect x="790" y="330" width="75" height="195" fill="#0f766e"/>
+  <rect x="900" y="250" width="75" height="275" fill="#115e59"/>
+  <rect x="1010" y="175" width="75" height="350" fill="#064e3b"/>
+  <path d="M650 525h470" stroke="#0f172a" stroke-width="8"/>
+  <text x="86" y="82" fill="#0f172a" font-family="Arial, sans-serif" font-size="44" font-weight="900">Soccer Business</text>
+</svg>

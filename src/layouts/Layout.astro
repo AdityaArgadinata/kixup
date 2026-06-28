@@ -1,0 +1,42 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import SEO from '../components/SEO.astro';
+import SiteSchema from '../components/SiteSchema.astro';
+import { SITE } from '../lib/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  title = SITE.name,
+  description = SITE.defaultDescription,
+  image,
+  type = 'website',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE.url).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO title={title} description={description} canonical={canonical} image={image} type={type} />
+    <SiteSchema />
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen bg-[#eef0f3] text-slate-900 antialiased">
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,53 @@
+---
+import { SITE, getArticleUrl, getCategory, type Article } from '../lib/site';
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+const category = getCategory(article.data.category);
+const articleUrl = new URL(getArticleUrl(article), SITE.url).toString();
+const organizationId = new URL('/#organization', SITE.url).toString();
+const wordCount = article.body.trim().split(/\s+/).filter(Boolean).length;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  '@id': `${articleUrl}#article`,
+  headline: article.data.title,
+  description: article.data.description,
+  image: [new URL(article.data.image, SITE.url).toString()],
+  datePublished: article.data.publishedAt.toISOString(),
+  dateModified: article.data.updatedAt.toISOString(),
+  inLanguage: SITE.language,
+  isAccessibleForFree: true,
+  wordCount,
+  author: {
+    '@type': 'Person',
+    name: article.data.author,
+    url: new URL('/authors/aditya-argadinata/', SITE.url).toString(),
+  },
+  publisher: {
+    '@id': organizationId,
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': articleUrl,
+  },
+  articleSection: article.data.category,
+  keywords: article.data.tags.join(', '),
+  about: [
+    {
+      '@type': 'Thing',
+      name: article.data.category,
+    },
+    ...article.data.tags.map((tag) => ({
+      '@type': 'Thing',
+      name: tag,
+    })),
+  ],
+  thumbnailUrl: new URL(article.data.image, SITE.url).toString(),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

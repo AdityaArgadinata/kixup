@@ -1,0 +1,14 @@
+---
+import { getCategory } from '../lib/site';
+
+interface Props {
+  category: string;
+}
+
+const { category } = Astro.props;
+const categoryMeta = getCategory(category);
+---
+
+<a href={`/${categoryMeta?.slug ?? ''}/`} class="inline-flex w-fit items-center bg-emerald-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-800 ring-1 ring-emerald-100">
+  {category}
+</a>

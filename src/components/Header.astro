@@ -1,0 +1,36 @@
+---
+import { categories, SITE } from '../lib/site';
+---
+
+<header class="border-b border-slate-200 bg-white">
+  <div class="border-b border-slate-100 bg-slate-50">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8">
+      <p class="text-xs font-bold uppercase tracking-wide text-slate-500">Soccer explained for American fans</p>
+      <nav class="flex gap-4 text-xs font-bold uppercase tracking-wide text-slate-500" aria-label="Utility">
+        <a class="hover:text-emerald-700" href="/scores/">Scores</a>
+        <a class="hover:text-emerald-700" href="/rss.xml">RSS</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-5 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:px-8">
+    <a href="/" class="text-3xl font-black tracking-tight text-slate-950" aria-label={`${SITE.name} home`}>
+      Kixup <span class="text-emerald-700">News</span>
+    </a>
+    <nav class="flex gap-5 text-sm font-semibold text-slate-600" aria-label="Site">
+      <a class="hover:text-emerald-700" href="/about/">About</a>
+      <a class="hover:text-emerald-700" href="/editorial-policy/">Editorial Policy</a>
+      <a class="hover:text-emerald-700" href="/contact/">Contact</a>
+    </nav>
+  </div>
+
+  <nav class="border-t border-slate-200 bg-slate-950" aria-label="Sections">
+    <div class="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4 py-0 text-sm font-bold text-white sm:px-6 lg:px-8">
+      {categories.map((category) => (
+        <a class="shrink-0 px-3 py-3 hover:bg-emerald-700" href={`/${category.slug}/`}>
+          {category.name}
+        </a>
+      ))}
+    </div>
+  </nav>
+</header>

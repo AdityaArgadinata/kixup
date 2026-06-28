@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Club World Cup globe</title>
+  <desc id="desc">A globe and trophy representing the Club World Cup.</desc>
+  <rect width="1200" height="675" fill="#ecfeff"/>
+  <circle cx="425" cy="330" r="190" fill="#0e7490"/>
+  <path d="M280 230c90 40 200 40 290 0M260 340c105 35 225 35 330 0M300 450c75-35 175-35 250 0" stroke="#cffafe" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <path d="M425 150c-55 115-55 245 0 360M425 150c55 115 55 245 0 360" stroke="#cffafe" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <path d="M750 175h230l-35 230c-12 78-66 120-80 120s-68-42-80-120l-35-230Z" fill="#f59e0b"/>
+  <rect x="830" y="520" width="70" height="60" fill="#92400e"/>
+  <rect x="770" y="580" width="190" height="36" fill="#78350f"/>
+  <text x="90" y="90" fill="#164e63" font-family="Arial, sans-serif" font-size="44" font-weight="900">Club World Cup</text>
+</svg>

@@ -1,0 +1,90 @@
+---
+import ArticleSchema from '../components/ArticleSchema.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CategoryBadge from '../components/CategoryBadge.astro';
+import LatestSidebar from '../components/LatestSidebar.astro';
+import RelatedArticles from '../components/RelatedArticles.astro';
+import TagList from '../components/TagList.astro';
+import Layout from './Layout.astro';
+import {
+  formatDate,
+  getCategory,
+  getReadingTime,
+  getRelatedArticles,
+  sortArticles,
+  type Article,
+} from '../lib/site';
+
+interface Props {
+  article: Article;
+  articles: Article[];
+}
+
+const { article, articles } = Astro.props;
+const category = getCategory(article.data.category);
+const related = getRelatedArticles(article, articles);
+const latest = sortArticles(articles).filter((item) => item.id !== article.id);
+const hasBusinessAngle =
+  category?.slug === 'soccer-business' ||
+  article.data.tags.some((tag) => /business|financial|salary|money|transfers/i.test(tag));
+---
+
+<Layout title={article.data.title} description={article.data.description} image={article.data.image} type="article">
+  <Fragment slot="head">
+    <ArticleSchema article={article} />
+  </Fragment>
+  <main>
+    <article class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[
+        { label: article.data.category, href: `/${category?.slug ?? ''}/` },
+        { label: article.data.title },
+      ]} />
+
+      <header class="mt-8 max-w-4xl">
+        <CategoryBadge category={article.data.category} />
+        <h1 class="mt-5 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+          {article.data.title}
+        </h1>
+        <p class="mt-5 text-xl leading-8 text-slate-600">{article.data.description}</p>
+        <div class="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-sm font-medium text-slate-600">
+          <a class="font-bold text-slate-950 hover:text-emerald-700" href="/authors/aditya-argadinata/">{article.data.author}</a>
+          <span>Published {formatDate(article.data.publishedAt)}</span>
+          <span>Updated {formatDate(article.data.updatedAt)}</span>
+          <span>{getReadingTime(article.body)}</span>
+        </div>
+      </header>
+
+      <figure class="mt-8">
+        <img
+          src={article.data.image}
+          alt={article.data.imageAlt}
+          width="1200"
+          height="675"
+          loading="eager"
+          decoding="async"
+          class="aspect-video w-full bg-slate-100 object-cover"
+        />
+        <figcaption class="mt-2 text-xs text-slate-500">{article.data.imageAlt}</figcaption>
+      </figure>
+
+      <div class="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div>
+          <div class="article-body">
+            <slot />
+          </div>
+          <div class="mt-8">
+            <TagList tags={article.data.tags} />
+          </div>
+          {hasBusinessAngle && (
+            <div class="mt-8 border-l-4 border-amber-400 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
+              This article is for general soccer education and news context only. It is not financial, legal, investment, or betting advice.
+            </div>
+          )}
+        </div>
+        <LatestSidebar articles={latest} />
+      </div>
+
+      <RelatedArticles articles={related} />
+    </article>
+  </main>
+</Layout>

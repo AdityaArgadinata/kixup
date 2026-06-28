@@ -1,0 +1,25 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ScoreboardWidget from '../components/ScoreboardWidget.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="World Cup Scores"
+  description="World Cup soccer scores from the last seven days for American fans."
+>
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumbs items={[{ label: 'Scores' }]} />
+    <header class="mt-8 max-w-3xl">
+      <p class="text-sm font-black uppercase tracking-wide text-emerald-700">Scoreboard</p>
+      <h1 class="mt-3 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">World Cup Scores</h1>
+      <p class="mt-4 text-lg leading-8 text-slate-600">
+        A lightweight scoreboard showing World Cup matches from the last seven days.
+      </p>
+    </header>
+
+    <div class="mt-8">
+      <ScoreboardWidget />
+    </div>
+  </main>
+</Layout>
