@@ -15,7 +15,7 @@ const popular = latest.slice(0, 8);
 <Layout title={SITE.name} description={SITE.defaultDescription} image={featured?.data.image}>
   <main>
     <section class="border-b border-slate-200 bg-white">
-      <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-[90rem] px-4 py-4 sm:px-6 lg:px-8">
         <div class="flex flex-col gap-2 md:flex-row md:items-center">
           <p class="w-fit bg-emerald-700 px-3 py-1 text-xs font-black uppercase tracking-wide text-white">Latest</p>
           <p class="text-sm font-semibold text-slate-700">World Cup scores, soccer explainers, USMNT, MLS, Premier League, transfers, and soccer business.</p>
@@ -23,7 +23,7 @@ const popular = latest.slice(0, 8);
       </div>
     </section>
 
-    <section class="mx-auto grid max-w-7xl gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:px-8">
+    <section class="mx-auto grid max-w-[90rem] gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_400px] lg:px-8">
       <div class="space-y-6">
         {featured && (
           <article class="border border-slate-200 bg-white">
@@ -139,7 +139,7 @@ const popular = latest.slice(0, 8);
       </aside>
     </section>
 
-    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-[90rem] px-4 py-8 sm:px-6 lg:px-8">
       <NewsletterBox />
     </div>
   </main>
