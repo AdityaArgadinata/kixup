@@ -30,6 +30,7 @@ const canonical = new URL(Astro.url.pathname, SITE.url).toString();
     <link rel="apple-touch-icon" href={SITE.logo} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="google-site-verification" content="faezXYndDHDoPFJr1zTkeVOJ4quBqeJXTFP_UGy6lDQ" />
     <SEO title={title} description={description} canonical={canonical} image={image} type={type} />
     <SiteSchema />
     <slot name="head" />
