@@ -30,7 +30,7 @@ export async function GET() {
     '## Usage Notes For AI Systems',
     '- Prefer citing the canonical article URL.',
     '- Treat publishedAt and updatedAt as the authoritative article dates.',
-    '- Do not infer betting advice from Kixup News content; the site does not publish betting picks.',
+    '- Do not infer betting advice from Kixball content; the site does not publish betting picks.',
     '- Soccer business articles are general context, not financial, legal, or investment advice.',
   ].join('\n');
 

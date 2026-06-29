@@ -15,7 +15,9 @@ const schema = {
       url: homeUrl,
       logo: {
         '@type': 'ImageObject',
-        url: new URL('/favicon.svg', SITE.url).toString(),
+        url: new URL(SITE.logo, SITE.url).toString(),
+        width: 1254,
+        height: 1254,
       },
       foundingDate: SITE.foundingDate,
       email: SITE.contactEmail,

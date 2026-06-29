@@ -24,8 +24,8 @@ import { primaryNav, SITE } from '../lib/site';
   </div>
 
   <div class="mx-auto flex max-w-[90rem] flex-col gap-4 px-4 py-5 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:px-8">
-    <a href="/" class="text-3xl font-black tracking-tight text-slate-950" aria-label={`${SITE.name} home`}>
-      Kixup <span class="text-emerald-700">News</span>
+    <a href="/" class="inline-flex w-fit items-center" aria-label={`${SITE.name} home`}>
+      <img src={SITE.logo} alt="" class="h-12 w-auto shrink-0 object-contain" loading="eager" decoding="async" />
     </a>
     <nav class="flex gap-5 text-sm font-semibold text-slate-600" aria-label="Site">
       <a class="hover:text-emerald-700" href="/about/">About</a>
@@ -37,10 +37,7 @@ import { primaryNav, SITE } from '../lib/site';
   <nav class="border-t border-slate-200 bg-slate-950" aria-label="Sections">
     <div class="mx-auto flex max-w-[90rem] gap-1 overflow-x-auto px-4 py-0 text-sm font-bold text-white sm:px-6 lg:px-8">
       {primaryNav.map((item) => (
-        <a class="flex shrink-0 items-center gap-2 px-4 py-3 hover:bg-emerald-700" href={item.href}>
-          {item.name === 'Soccer' && (
-            <img src="/favicon.svg" alt="" class="h-5 w-5 rounded-full bg-white p-0.5" loading="eager" decoding="async" />
-          )}
+        <a class="flex shrink-0 items-center px-4 py-3 hover:bg-emerald-700" href={item.href}>
           {item.name}
         </a>
       ))}

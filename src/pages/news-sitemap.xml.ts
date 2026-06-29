@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import { SITE, getArticleUrl, sortArticles } from '../lib/site';
+import { escapeXml, xmlResponse } from '../lib/xml';
 
 export async function GET() {
   const articles = sortArticles(await getCollection('articles', ({ data }) => !data.draft)).slice(0, 1000);
@@ -22,18 +23,5 @@ ${articles
   .join('\n')}
 </urlset>`;
 
-  return new Response(body, {
-    headers: {
-      'Content-Type': 'application/xml',
-    },
-  });
-}
-
-function escapeXml(value: string) {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+  return xmlResponse(body);
 }

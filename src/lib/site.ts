@@ -1,15 +1,28 @@
 import type { CollectionEntry } from 'astro:content';
 
 export const SITE = {
-  name: 'Kixup News',
+  name: 'Kixball',
   tagline: 'Soccer explained for American fans.',
-  url: 'https://kixup.online',
+  url: 'https://www.kixball.site',
+  logo: '/kixball.png',
   defaultDescription:
-    'Soccer explainers and news context for American fans, covering MLS, USMNT, Premier League, Champions League, transfers, and soccer business.',
+    'Beginner-friendly soccer news, World Cup guides, USMNT context, MLS explainers, Premier League stories, transfer updates, and soccer business analysis for global fans.',
+  defaultKeywords: [
+    'soccer news',
+    'football news',
+    'World Cup',
+    'USMNT',
+    'MLS',
+    'Premier League',
+    'Champions League',
+    'soccer transfers',
+    'soccer business',
+    'soccer explainers',
+  ],
   author: 'Aditya Argadinata',
   locale: 'en_US',
   language: 'en',
-  contactEmail: 'hello@kixup.online',
+  contactEmail: 'hello@kixball.site',
   foundingDate: '2026-06-28',
   sameAs: [] as string[],
 };

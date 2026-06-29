@@ -5,6 +5,7 @@ export function GET() {
     `User-agent: *
 Allow: /
 
+Sitemap: ${new URL('/sitemap.xml', SITE.url).toString()}
 Sitemap: ${new URL('/sitemap-index.xml', SITE.url).toString()}
 Sitemap: ${new URL('/news-sitemap.xml', SITE.url).toString()}
 

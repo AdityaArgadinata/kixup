@@ -21,13 +21,19 @@ const {
 
 const fullTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
 const imageUrl = new URL(image, SITE.url).toString();
+const keywords = SITE.defaultKeywords.join(', ');
 ---
 
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+<meta name="author" content={SITE.author} />
+<meta name="publisher" content={SITE.name} />
+<meta name="language" content={SITE.language} />
 <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
 <meta name="googlebot" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
 <link rel="canonical" href={canonical} />
+<link rel="sitemap" type="application/xml" href={new URL('/sitemap.xml', SITE.url).toString()} />
 <link rel="alternate" type="application/rss+xml" title={`${SITE.name} RSS`} href={new URL('/rss.xml', SITE.url).toString()} />
 <meta name="theme-color" content="#047857" />
 <meta name="application-name" content={SITE.name} />
@@ -39,6 +45,7 @@ const imageUrl = new URL(image, SITE.url).toString();
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={imageUrl} />
+<meta property="og:image:alt" content={description} />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
