@@ -41,11 +41,89 @@ import { primaryNav, SITE } from '../lib/site';
           {item.name}
         </a>
       ))}
+      <button
+        class="ml-auto grid min-h-11 w-11 shrink-0 place-items-center hover:bg-emerald-700"
+        type="button"
+        aria-label="Open search"
+        aria-haspopup="dialog"
+        data-search-open
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m21 21-4.35-4.35" />
+          <circle cx="11" cy="11" r="7" />
+        </svg>
+      </button>
     </div>
   </nav>
+
+  <div class="fixed inset-0 z-50 hidden items-start justify-center bg-slate-950/40 px-4 py-16 backdrop-blur-sm sm:py-24" data-search-modal>
+    <div class="w-full max-w-2xl border border-slate-200 bg-white shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+      <div class="flex items-center justify-between border-b border-slate-200 px-4 py-3">
+        <h2 id="search-modal-title" class="text-sm font-black uppercase tracking-wide text-slate-950">Search Kixball</h2>
+        <button class="grid h-9 w-9 place-items-center text-slate-500 hover:bg-slate-100 hover:text-slate-950" type="button" aria-label="Close search" data-search-close>
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </div>
+      <form class="grid gap-3 p-4 sm:grid-cols-[minmax(0,1fr)_auto]" action="/search/" method="get" role="search">
+        <label class="sr-only" for="site-search-modal">Search articles</label>
+        <input
+          id="site-search-modal"
+          name="q"
+          type="search"
+          autocomplete="off"
+          placeholder="Search news, teams, topics"
+          class="min-h-12 w-full border border-slate-300 px-4 text-base font-semibold text-slate-900 outline-none placeholder:text-slate-400 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+          data-search-modal-input
+        />
+        <button class="inline-flex min-h-12 items-center justify-center gap-2 bg-emerald-700 px-5 text-sm font-black uppercase tracking-wide text-white hover:bg-emerald-800" type="submit">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m21 21-4.35-4.35" />
+            <circle cx="11" cy="11" r="7" />
+          </svg>
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
 </header>
 
 <script>
+  const searchModal = document.querySelector('[data-search-modal]');
+  const searchOpenButton = document.querySelector('[data-search-open]');
+  const searchCloseButton = document.querySelector('[data-search-close]');
+  const searchModalInput = document.querySelector('[data-search-modal-input]');
+
+  searchOpenButton?.addEventListener('click', () => {
+    if (!(searchModal instanceof HTMLElement)) return;
+
+    searchModal.classList.remove('hidden');
+    searchModal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+
+    if (searchModalInput instanceof HTMLInputElement) {
+      window.setTimeout(() => searchModalInput.focus(), 0);
+    }
+  });
+
+  searchCloseButton?.addEventListener('click', closeSearchModal);
+  searchModal?.addEventListener('click', (event) => {
+    if (event.target === searchModal) closeSearchModal();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeSearchModal();
+  });
+
+  function closeSearchModal() {
+    if (!(searchModal instanceof HTMLElement)) return;
+
+    searchModal.classList.add('hidden');
+    searchModal.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
   document.querySelectorAll('[data-header-schedule]').forEach((root) => {
     async function loadHeaderSchedule() {
       try {

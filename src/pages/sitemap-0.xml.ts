@@ -18,6 +18,7 @@ const staticPaths = [
   '/premier-league/',
   '/privacy-policy/',
   '/schedule/',
+  '/search/',
   '/scores/',
   '/soccer-business/',
   '/soccer-explainers/',

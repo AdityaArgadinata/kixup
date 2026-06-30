@@ -1,0 +1,216 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Search"
+  description="Search Kixball soccer news, explainers, teams, competitions, and transfer stories."
+>
+  <main class="mx-auto max-w-[90rem] px-4 py-8 sm:px-6 lg:px-8">
+    <Breadcrumbs items={[{ label: 'Search' }]} />
+    <header class="mt-8 max-w-3xl">
+      <p class="text-sm font-black uppercase tracking-wide text-emerald-700">Search</p>
+      <h1 class="mt-3 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">Search Kixball</h1>
+      <p class="mt-4 text-lg leading-8 text-slate-600">
+        Find soccer news, World Cup explainers, transfer stories, and tactical analysis.
+      </p>
+    </header>
+
+    <section class="mt-8" data-search-page>
+      <form class="grid gap-3 border border-slate-200 bg-white p-4 sm:grid-cols-[minmax(0,1fr)_auto]" action="/search/" method="get" role="search">
+        <label class="sr-only" for="search-page-input">Search articles</label>
+        <input
+          id="search-page-input"
+          name="q"
+          type="search"
+          autocomplete="off"
+          placeholder="Search by team, player, competition, or topic"
+          class="min-h-12 w-full border border-slate-300 px-4 text-base font-semibold text-slate-900 outline-none placeholder:text-slate-400 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+          data-search-input
+        />
+        <button class="inline-flex min-h-12 items-center justify-center gap-2 bg-emerald-700 px-5 text-sm font-black uppercase tracking-wide text-white hover:bg-emerald-800" type="submit">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m21 21-4.35-4.35" />
+            <circle cx="11" cy="11" r="7" />
+          </svg>
+          Search
+        </button>
+      </form>
+
+      <div class="mt-6 flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+        <p class="text-sm font-bold text-slate-600" data-search-status>Enter a search term to find articles.</p>
+        <a class="text-sm font-bold text-emerald-700 hover:text-emerald-900" href="/news/">Browse all news</a>
+      </div>
+
+      <div class="mt-6 grid gap-5" data-search-results></div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  const root = document.querySelector('[data-search-page]');
+  const input = root?.querySelector('[data-search-input]');
+  const status = root?.querySelector('[data-search-status]');
+  const results = root?.querySelector('[data-search-results]');
+
+  const params = new URLSearchParams(window.location.search);
+  const initialQuery = params.get('q')?.trim() || '';
+  let searchItems = [];
+
+  if (input instanceof HTMLInputElement) {
+    input.value = initialQuery;
+  }
+
+  loadSearchIndex();
+
+  async function loadSearchIndex() {
+    if (!root || !status || !results) return;
+
+    try {
+      const response = await fetch('/api/search.json', {
+        headers: { Accept: 'application/json' },
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Unable to load search index.');
+      }
+
+      searchItems = Array.isArray(data.articles) ? data.articles : [];
+      renderSearch(initialQuery);
+    } catch {
+      status.textContent = 'Search is unavailable right now.';
+      results.innerHTML = '';
+    }
+  }
+
+  function renderSearch(query) {
+    if (!status || !results) return;
+
+    const normalizedQuery = normalize(query);
+    if (!normalizedQuery) {
+      status.textContent = 'Enter a search term to find articles.';
+      results.innerHTML = '';
+      return;
+    }
+
+    const terms = normalizedQuery.split(' ').filter(Boolean);
+    const matches = searchItems
+      .map((article) => ({
+        article,
+        score: scoreArticle(article, terms),
+      }))
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score || Date.parse(b.article.publishedAt) - Date.parse(a.article.publishedAt))
+      .slice(0, 24);
+
+    status.textContent = matches.length === 1
+      ? `1 result for "${query}"`
+      : `${matches.length} results for "${query}"`;
+
+    results.innerHTML = matches.length > 0
+      ? matches.map(({ article }) => renderResult(article, terms)).join('')
+      : renderEmptyState(query);
+  }
+
+  function scoreArticle(article, terms) {
+    const title = normalize(article.title);
+    const description = normalize(article.description);
+    const category = normalize(article.category);
+    const tags = normalize((article.tags || []).join(' '));
+    const searchText = normalize(article.searchText || '');
+
+    return terms.reduce((score, term) => {
+      if (title.includes(term)) score += 8;
+      if (description.includes(term)) score += 5;
+      if (category.includes(term)) score += 4;
+      if (tags.includes(term)) score += 4;
+      if (searchText.includes(term)) score += 1;
+      return score;
+    }, 0);
+  }
+
+  function renderResult(article, terms) {
+    const date = new Date(article.publishedAt).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+    const excerpt = buildExcerpt(article, terms);
+
+    return `
+      <article class="grid gap-4 border border-slate-200 bg-white p-4 sm:grid-cols-[180px_1fr]">
+        <a href="${escapeHtml(article.url)}" class="block bg-slate-100">
+          <img
+            src="${escapeHtml(article.image)}"
+            alt="${escapeHtml(article.imageAlt)}"
+            width="360"
+            height="203"
+            loading="lazy"
+            decoding="async"
+            class="aspect-video w-full object-cover"
+          />
+        </a>
+        <div>
+          <p class="text-xs font-black uppercase tracking-wide text-emerald-700">${escapeHtml(article.category)}</p>
+          <h2 class="mt-2 text-2xl font-black leading-tight text-slate-950">
+            <a class="hover:text-emerald-700" href="${escapeHtml(article.url)}">${escapeHtml(article.title)}</a>
+          </h2>
+          <p class="mt-2 text-sm leading-6 text-slate-600">${escapeHtml(excerpt)}</p>
+          <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-slate-500">${escapeHtml(date)} · ${escapeHtml((article.tags || []).slice(0, 3).join(', '))}</p>
+        </div>
+      </article>
+    `;
+  }
+
+  function renderEmptyState(query) {
+    return `
+      <div class="border border-slate-200 bg-white p-6">
+        <h2 class="text-2xl font-black text-slate-950">No results found</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-600">No published articles matched "${escapeHtml(query)}". Try a team, player, competition, or topic.</p>
+      </div>
+    `;
+  }
+
+  function buildExcerpt(article, terms) {
+    const plainBody = stripMarkdown(article.body || '');
+    const source = [article.description, plainBody].join(' ').replace(/\s+/g, ' ').trim();
+    const normalizedSource = normalize(source);
+    const firstMatch = terms
+      .map((term) => normalizedSource.indexOf(term))
+      .filter((index) => index >= 0)
+      .sort((a, b) => a - b)[0];
+
+    if (firstMatch === undefined) return article.description;
+
+    const start = Math.max(0, firstMatch - 90);
+    const end = Math.min(source.length, firstMatch + 180);
+    const prefix = start > 0 ? '...' : '';
+    const suffix = end < source.length ? '...' : '';
+
+    return `${prefix}${source.slice(start, end).trim()}${suffix}`;
+  }
+
+  function stripMarkdown(value) {
+    return String(value)
+      .replace(/^---[\s\S]*?---/, ' ')
+      .replace(/```[\s\S]*?```/g, ' ')
+      .replace(/!\[[^\]]*\]\([^)]+\)/g, ' ')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/[#>*_`~-]/g, ' ');
+  }
+
+  function normalize(value) {
+    return String(value).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+</script>
