@@ -38,7 +38,7 @@ slug: "article-title-slug"
 publishedAt: "YYYY-MM-DD"
 updatedAt: "YYYY-MM-DD"
 author: "Aditya Argadinata"
-category: "MLS" | "Premier League" | "Soccer Business" | "World Cup" | "USMNT" | "Transfers" | "Soccer Explainers"
+category: "World Cup" | "MLS" | "USMNT" | "Premier League" | "Champions League" | "Transfers" | "Soccer Business" | "Analysis"
 tags: ["Tag1", "Tag2"]
 image: "/images/soccer-business.svg"  # Use placeholder/existing images or write inline image references
 imageAlt: "Alt description for the image"
