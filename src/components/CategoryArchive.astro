@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import ArticleCard from './ArticleCard.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
+import InfiniteArticles from './InfiniteArticles.astro';
 import Layout from '../layouts/Layout.astro';
 import { getCategory, sortArticles } from '../lib/site';
 
@@ -31,8 +31,6 @@ const articles = sortArticles(
       <h1 class="mt-3 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">{category.name}</h1>
       <p class="mt-4 max-w-3xl text-lg leading-8 text-slate-600">{category.description}</p>
     </header>
-    <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {articles.map((article) => <ArticleCard article={article} />)}
-    </div>
+    <InfiniteArticles articles={articles} />
   </main>
 </Layout>

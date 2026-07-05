@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import ArticleCard from '../../../components/ArticleCard.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import InfiniteArticles from '../../../components/InfiniteArticles.astro';
 import Layout from '../../../layouts/Layout.astro';
 import { sortArticles } from '../../../lib/site';
 
@@ -28,8 +28,6 @@ const articles = sortArticles(
         </p>
       </div>
     </header>
-    <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {articles.map((article) => <ArticleCard article={article} />)}
-    </div>
+    <InfiniteArticles articles={articles} />
   </main>
 </Layout>

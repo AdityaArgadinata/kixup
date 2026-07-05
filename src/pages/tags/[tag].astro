@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import ArticleCard from '../../components/ArticleCard.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import InfiniteArticles from '../../components/InfiniteArticles.astro';
 import Layout from '../../layouts/Layout.astro';
 import { slugify, sortArticles } from '../../lib/site';
 
@@ -32,8 +32,6 @@ const taggedArticles = sortArticles(
       <p class="text-sm font-black uppercase tracking-wide text-emerald-700">Tag</p>
       <h1 class="mt-3 text-4xl font-black tracking-tight text-slate-950">#{tag}</h1>
     </header>
-    <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {taggedArticles.map((article) => <ArticleCard article={article} />)}
-    </div>
+    <InfiniteArticles articles={taggedArticles} />
   </main>
 </Layout>
