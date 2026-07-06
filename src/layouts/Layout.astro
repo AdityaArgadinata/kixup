@@ -33,6 +33,14 @@ const canonical = new URL(Astro.url.pathname, SITE.url).toString();
     <meta name="generator" content={Astro.generator} />
     <meta name="google-site-verification" content="faezXYndDHDoPFJr1zTkeVOJ4quBqeJXTFP_UGy6lDQ" />
     <meta name="google-adsense-account" content="ca-pub-4142307679131287" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BRK3RQMWBB"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-BRK3RQMWBB');
+    </script>
     <SEO title={title} description={description} canonical={canonical} image={image} type={type} />
     <SiteSchema />
     <slot name="head" />
