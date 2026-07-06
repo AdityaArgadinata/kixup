@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2d6a4f"/>
+      <stop offset="100%" style="stop-color:#40916c"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e94560"/>
+      <stop offset="100%" style="stop-color:#ff6b6b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <!-- Scale / Balance -->
+  <line x1="400" y1="80" x2="400" y2="200" stroke="#ffffff" stroke-width="4"/>
+  <line x1="250" y1="200" x2="550" y2="200" stroke="#ffffff" stroke-width="4"/>
+  <!-- Left pan (Income) -->
+  <path d="M220 200 Q250 260 280 200" fill="url(#green)" opacity="0.8"/>
+  <text x="250" y="245" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Income</text>
+  <!-- Right pan (Spending) -->
+  <path d="M520 200 Q550 260 580 200" fill="url(#red)" opacity="0.8"/>
+  <text x="550" y="245" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Spending</text>
+  <!-- Fulcrum -->
+  <polygon points="380,80 420,80 400,60" fill="#ffffff"/>
+  <!-- Euro coins -->
+  <circle cx="250" cy="170" r="12" fill="#ffd700" opacity="0.7"/>
+  <text x="250" y="175" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">€</text>
+  <circle cx="550" cy="170" r="12" fill="#ffd700" opacity="0.7"/>
+  <text x="550" y="175" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">€</text>
+  <!-- FIFA badge -->
+  <rect x="340" y="300" width="120" height="50" rx="8" fill="#2a2a4a" stroke="#ffd700" stroke-width="2"/>
+  <text x="400" y="330" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffd700" text-anchor="middle">FFP</text>
+  <!-- Corner accents -->
+  <line x1="30" y1="30" x2="80" y2="30" stroke="#ffd700" stroke-width="3"/>
+  <line x1="30" y1="30" x2="30" y2="80" stroke="#ffd700" stroke-width="3"/>
+  <line x1="770" y1="30" x2="720" y2="30" stroke="#ffd700" stroke-width="3"/>
+  <line x1="770" y1="30" x2="770" y2="80" stroke="#ffd700" stroke-width="3"/>
+  <!-- Title -->
+  <text x="400" y="420" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">What is Financial Fair Play?</text>
+</svg>
