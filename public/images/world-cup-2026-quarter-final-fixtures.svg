@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b3e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="600" cy="315" r="200" fill="none" stroke="#3a1f5e" stroke-width="2" opacity="0.3"/>
+  <circle cx="600" cy="315" r="140" fill="none" stroke="#3a1f5e" stroke-width="1.5" opacity="0.2"/>
+  <circle cx="600" cy="315" r="80" fill="none" stroke="#3a1f5e" stroke-width="1" opacity="0.15"/>
+  <line x1="600" y1="115" x2="600" y2="515" stroke="#3a1f5e" stroke-width="1" opacity="0.15"/>
+  <line x1="400" y1="315" x2="800" y2="315" stroke="#3a1f5e" stroke-width="1" opacity="0.15"/>
+  <text x="600" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="58" fill="#ffffff">WORLD CUP 2026</text>
+  <text x="600" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="72" fill="#f5a623">QUARTER-FINALS</text>
+  <text x="600" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#a78bfa">FIXTURES &amp; SCHEDULE</text>
+  <line x1="350" y1="370" x2="850" y2="370" stroke="#f5a623" stroke-width="2" opacity="0.5"/>
+  <text x="300" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#e0d0ff">MAR vs FRA</text>
+  <text x="500" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#e0d0ff">BEL vs ESP</text>
+  <text x="700" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#e0d0ff">ENG vs NOR</text>
+  <text x="900" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#e0d0ff">SUI vs ARG</text>
+  <text x="300" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#8b7ab8">Jul 10</text>
+  <text x="500" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#8b7ab8">Jul 11</text>
+  <text x="700" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#8b7ab8">Jul 12</text>
+  <text x="900" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#8b7ab8">Jul 12</text>
+  <text x="600" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#6b5b95">All times WIB (UTC+7)</text>
+</svg>
