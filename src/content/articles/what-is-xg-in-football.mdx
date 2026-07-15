@@ -1,82 +1,101 @@
 ---
 title: "What Is xG in Football? Simple Explanation and Examples"
-description: "A beginner-friendly guide to expected goals (xG) in football — what it means, how it works, and why every fan should understand it."
+description: "xG (Expected Goals) explained simply — what it means, how it works, and why every football fan should understand this key stat."
 slug: "what-is-xg-in-football"
-publishedAt: "2026-06-29"
-updatedAt: "2026-06-29"
+publishedAt: "2026-07-15"
+updatedAt: "2026-07-15"
 author: "Aditya Argadinata"
 category: "Analysis"
-tags: ["xG", "Expected Goals", "Football Statistics", "Analytics"]
-image: "/images/xg-expected-goals.svg"
-imageAlt: "Football analytics graphic illustrating expected goals"
+tags: ["xG", "Football Stats", "Soccer Explained", "Expected Goals", "Analytics"]
+image: "/images/soccer-business.svg"
+imageAlt: "Football analytics graphic representing expected goals (xG)"
 draft: false
 ---
 
-## What is xG?
+## What Is xG?
 
-xG stands for **expected goals**. It's a football statistic that measures the quality of a chance by calculating how likely it is to result in a goal.
+**xG** stands for **Expected Goals**. It's a football statistic that measures the quality of a scoring chance by calculating how likely a shot is to result in a goal.
 
-Every shot taken in a match gets an xG value between **0 and 1**. A shot with an xG of 0.5 means that, historically, 50% of similar shots have been scored. A shot with an xG of 0.05 means only 5% of those shots go in.
+Every shot in a match gets an xG value between **0 and 1**:
 
-## How is xG calculated?
+- **xG of 0.01** = a very unlikely goal (e.g., a long-range shot from 35 yards)
+- **xG of 0.50** = a coin-flip chance (e.g., a one-on-one with the goalkeeper)
+- **xG of 0.90+** = a near-certain goal (e.g., a tap-in from two yards out)
 
-Data companies use thousands of past shots to build their xG models. They look at factors like:
+## How Is xG Calculated?
 
-- **Distance from goal** — closer shots get higher xG
-- **Angle** — central shots are easier than tight angles
-- **Body part** — feet vs head vs other
-- **Type of assist** — through ball, cross, set piece
-- **Game state** — some models factor in score and time
+Statistical models analyse thousands — sometimes millions — of past shots to build xG formulas. They consider factors like:
 
-For example, a penalty kick has an xG of around **0.76** because roughly 76% of penalties are scored across professional football.
+- **Distance from goal** — closer shots have higher xG
+- **Angle to goal** — central shots are easier than tight angles
+- **Body part** — feet vs. head vs. other
+- **Type of assist** — through ball, cross, set piece, etc.
+- **Game situation** — open play, counter-attack, penalty
 
-## A simple example
+Different providers (Opta, StatsBomb, FBref) use slightly different models, so xG numbers can vary between sources.
 
-Imagine a striker takes two shots in a match:
+## A Simple Example
 
-- **Shot 1**: A tap-in from 2 yards out (xG = 0.85)
-- **Shot 2**: A long-range effort from 30 yards (xG = 0.03)
+Imagine a team has three shots in a match:
 
-The striker's total xG for the match is **0.88**. If they scored one goal, they performed roughly as expected. If they scored neither, they underperformed. If they scored both, they overperformed.
+| Shot | Description | xG |
+|------|-------------|-----|
+| 1 | Long-range strike from 30 yards | 0.03 |
+| 2 | Header from a corner, six yards out | 0.35 |
+| 3 | One-on-one after a through ball | 0.55 |
 
-## Why does xG matter?
+That team's total xG for the match would be **0.93** (0.03 + 0.35 + 0.55). On average, you'd expect them to score roughly one goal from those three chances.
 
-xG helps fans, coaches, and analysts look beyond the final scoreline:
+## Why Does xG Matter?
 
-- **Identifying form**: A player scoring more than their xG suggests they're in hot form — or getting lucky
-- **Evaluating teams**: A team consistently creating high xG chances is likely to win more matches over time
-- **Spotting problems**: A team with high xG but few goals may need a better finisher
+### Measuring Team Performance
 
-## Common xG metrics you'll see
+A team that consistently creates 2.0+ xG per match is attacking well, even if they're not always scoring. Conversely, a team scoring from low-xG chances might be riding luck that won't last.
 
-| Metric | What it means |
-|--------|---------------|
-| **xG** | Expected goals from all shots |
-| **xG per 90** | Average expected goals per 90 minutes |
-| **xAG** | Expected assisted goals — quality of chances created for others |
-| **xG overperformance** | Goals scored minus xG — shows finishing ability |
-| **npxG** | Non-penalty expected goals — excludes penalties |
+### Evaluating Players
 
-## Frequently asked questions
+A striker who regularly outperforms their xG — scoring more goals than expected — is considered a clinical finisher. One who underperforms xG may be wasteful in front of goal.
 
-### Is xG perfect?
+### Predicting Results
 
-No. xG models vary between providers, and they don't account for everything — like the goalkeeper's position or the defender closing in. It's a useful guide, not an absolute truth.
+xG tells a deeper story than the final score. A team that wins 1-0 but had 0.2 xG while the opponent had 2.5 xG was probably lucky. Over time, xG tends to be a better predictor of future results than actual goals scored.
+
+## Common xG Terms
+
+- **xG per 90** — xG generated per 90 minutes of play
+- **npxG** — Non-penalty expected goals (excludes penalties, which are roughly 0.76 xG each)
+- **xG overperformance** — when a player scores more than their xG suggests
+- **xGA** — Expected Goals Against (how many goals a team is expected to concede)
+
+## What xG Does NOT Tell You
+
+xG has limits:
+
+- It doesn't account for shot quality after deflections or lucky bounces
+- It treats all shots the same regardless of the player taking them
+- It doesn't capture build-up play, pressing, or defensive actions
+- Different models give slightly different numbers for the same shot
+
+xG is best used alongside other stats and the eye test — not as the sole measure of a team or player.
+
+## xG vs. Actual Goals
+
+Over one match, xG and actual goals can differ wildly. Over a full season, they tend to converge. That's what makes xG so useful — it strips out randomness and reveals underlying performance trends.
+
+## Frequently Asked Questions
+
+### What is a good xG per match for a team?
+
+An xG of around **1.5 to 2.0 per match** is solid for most teams. Title contenders often average above 2.0. Anything below 1.0 suggests the team struggles to create chances.
 
 ### Who invented xG?
 
-The concept was popularised in the early 2010s by football analytics bloggers. Companies like Opta, StatsBomb, and FBref now provide xG data widely.
+The concept was popularised in the early 2010s by football analytics researchers. **Sam Green** and **Marek Kwiatkowski** at Opta, as well as public analysts like **Michael Caley** and **StatsBomb's Ted Knutson**, helped bring xG into mainstream football discussion.
 
-### Can xG predict match results?
+### Is xG used by professional clubs?
 
-Over many matches, xG correlates strongly with future results better than actual goals scored. But in a single match, anything can happen — that's football.
+Yes. Nearly every top-level professional club now employs data analysts who use xG and related metrics for tactical analysis, recruitment, and match preparation.
 
-### Where can I check xG data?
+### Can xG predict match outcomes?
 
-You can find xG stats on sites like **FBref**, **Understat**, and **FotMob**. Most match previews and post-match analysis now include xG numbers.
-
-## Related topics
-
-- [What Is a Hat Trick in Football?](/articles/what-is-a-hat-trick)
-- [What Is VAR in Football?](/articles/what-is-var)
-- [How Does the Champions League Format Work?](/articles/how-does-champions-league-format-work)
+xG-based models are among the most accurate public tools for predicting football results. However, football remains unpredictable — xG deals in probabilities, not certainties.
